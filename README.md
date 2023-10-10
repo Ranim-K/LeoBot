@@ -11,7 +11,7 @@ LeoBot is your smart chat companion. This Python-based chatbot provides accurate
 
 - **Multimedia Capabilities:** Now LeoBot can play songs and videos upon request, providing a more immersive experience.
 
-- **Instant Knowledge:*** LeoBot can perform Google searches on any topic, delivering real-time information to users.
+- **Instant Knowledge:** LeoBot can perform Google searches on any topic, delivering real-time information to users.
   
 - **Quit Command:** Users can exit the conversation at any time by typing 'quit', making the chat experience convenient.
 
