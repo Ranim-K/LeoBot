@@ -1,5 +1,7 @@
+# Made By Ranim
 import json
 from difflib import get_close_matches
+import pywhatkit
 
 # Load the knowledge base from the specified JSON file. 
 def load_knowldge_base(file_path: str) -> dict:
@@ -30,23 +32,30 @@ def chat_bot():
 
     while True:
         user_input : str = input("You: ")
-
-        if user_input.lower() == 'quit':
+        if 'play' in user_input.lower():
+            song = user_input.replace('play', '')
+            pywhatkit.playonyt(song)
+            print('Playing...')
+        elif 'search' in user_input.lower():
+            search = user_input.replace('search', '')
+            pywhatkit.search(search)
+            print('Searching...')
+        elif user_input.lower() == 'quit' or user_input.lower() == 'exit':
             break
-
-        best_match : str | None = find_best_match(user_input, [q["question"] for q in knowldge_base["questions"]])
-
-        if best_match:
-            answer: str = get_answer_for_question(best_match, knowldge_base)
-            print(f"Bot: {answer}")
         else:
-            print("Bot: I don\'t know the answer. Can you teach me?")
-            new_answer: str = input("Type the answer or 'skip' to Skip: ")
+            best_match : str | None = find_best_match(user_input, [q["question"] for q in knowldge_base["questions"]])
 
-            if new_answer.lower() != 'skip':
-                knowldge_base["questions"].append({"question": user_input, "answer": new_answer})
-                save_knowldge_base("knowldge_base.json", knowldge_base)
-                print("Bot: Thank you! I learned a new response!")
+            if best_match:
+                answer: str = get_answer_for_question(best_match, knowldge_base)
+                print(f"Bot: {answer}")
+            else:
+                print("Bot: I don\'t know the answer. Can you teach me?")
+                new_answer: str = input("Type the answer or 'skip' to Skip: ")
+
+                if new_answer.lower() != 'skip':
+                    knowldge_base["questions"].append({"question": user_input, "answer": new_answer})
+                    save_knowldge_base("knowldge_base.json", knowldge_base)
+                    print("Bot: Thank you! I learned a new response!")
 
 if __name__ == "__main__":
     chat_bot()
